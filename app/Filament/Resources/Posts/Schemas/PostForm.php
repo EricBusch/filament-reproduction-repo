@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Schema;
 
 class PostForm
@@ -14,18 +13,19 @@ class PostForm
     {
         return $schema
             ->components([
-                TextInput::make('title')->required(),
-                TextInput::make('slug')->required(),
-                Textarea::make('body')->required()->columnSpanFull(),
-                FileUpload::make('featured_image')->multiple()->maxFiles(2),
-                ToggleButtons::make('status')
-                             ->required()
-                             ->grouped()
-                             ->default('draft')
-                             ->options([
-                                 'draft'     => 'Draft',
-                                 'published' => 'Published',
-                             ]),
+                TextInput::make('title')
+                    ->required(),
+                TextInput::make('slug')
+                    ->required(),
+                Textarea::make('body')
+                    ->required()
+                    ->columnSpanFull(),
+                TextInput::make('status')
+                    ->required()
+                    ->default('draft'),
+                Select::make('website_id')
+                    ->relationship('website', 'name')
+                    ->required(),
             ]);
     }
 }

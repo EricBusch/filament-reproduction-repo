@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Website;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Route::bind('websites', function (string $value) {
+            dump($value);
+            return Website::where('id', $value)->firstOrFail();
+        });
     }
 }
